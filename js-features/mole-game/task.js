@@ -3,7 +3,8 @@ let lost = document.getElementById("lost");
 
 
 
-function restart() {
+function restart(message) {
+    alert(message);
     dead.textContent = 0;
     lost.textContent = 0;
 }
@@ -22,11 +23,9 @@ for(let index = 1; index <= 9; index++) {
         }
 
         if(lost.textContent == 5) {
-            alert("Вы проиграли!");
-            restart();
+            restart("Вы проиграли!");
         } else if(dead.textContent == 10) {
-            alert("Победа!");
-            restart();
+            restart("Победа!");
         }
     }
 }
