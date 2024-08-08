@@ -5,7 +5,7 @@ const tasks = document.getElementsByClassName('task__remove');
 
 function addTask(event) {
     event.preventDefault();
-    if (taskInput.value !== '') {
+    if (taskInput.value.trim() !== '') {
         tasksList.insertAdjacentHTML('beforeend',
             `<div class="task">
         <div class="task__title">
@@ -25,8 +25,3 @@ function addTask(event) {
 
 
 button.addEventListener('click', addTask);
-taskInput.addEventListener('keydown', function (event) {
-    if (event.key === 13) {
-        addTask(event);
-    }
-})
