@@ -18,38 +18,33 @@ function deduct(event) {
 }
 
 function addToBasket(event) {
-    let addition = event.target;
-    let productToBasket = addition.closest('.product');
-
+    let productToBasket = event.target.closest('.product');
     let id = productToBasket.dataset.id;
-    let productInBasket = document.createElement('div');
-
-    productInBasket.setAttribute('class', 'cart__product');
-    productInBasket.dataset.id = id;
-    
-    let productImage = document.createElement('img');
-    productImage.setAttribute('class', 'cart__product-image');
-    let link = productToBasket.querySelector('.product__image').src;
-    productImage.setAttribute('src', link);
-    
-    let amount = document.createElement('div');
+    let productImage = productToBasket.querySelector('.product__image').src;
     let number = productToBasket.querySelector('.product__quantity-value').textContent;
-    amount.setAttribute('class', 'cart__product-count');
-    amount.textContent = number;
 
-    productInBasket.insertAdjacentElement('afterbegin', productImage);
-    productInBasket.insertAdjacentElement('beforeend', amount);
+    let products = [];
+    products.push({
+        id: id,
+        image: productImage,
+        count: number
+    })
 
-    for (let item of basket.children) {
-        if (item.dataset.id === id) {
-            let productAmount = item.querySelector('.cart__product-count').textContent;
-            let productTotal = Number(productAmount) + Number(number);
-            item.querySelector('.cart__product-count').textContent = productTotal;
-        
-            return false;
-        }
-    }
-    basket.appendChild(productInBasket);
+   
+    const productInCard = products.find((product) => product.id === id);
+        if(productInCard) {
+        let productAmount = productInCard.querySelector('.cart__product-count').textContent + number;
+        productInCard.querySelector('.cart__product-count').textContent = productTotal;
+        } else {
+        productInCard = document.createElement('div');
+        productInCard.classList.add('cart__product');
+        productInCard.dataset.id = id;
+        productInCard.innerHTML = `
+            <img class='cart__product-image' src='${productImage}'>
+            <div class='cart__product-count'>${number}</div>
+        `;
+        document.querySelector('.cart__products').appendChild(productInCard);
+    }   
 }
 
 for (let i = 0; i < plus.length; i++) {
